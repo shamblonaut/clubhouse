@@ -1,0 +1,36 @@
+{
+  "name": "clubhouse",
+  "version": "1.0.0",
+  "description": "Write posts for members of a private club",
+  "homepage": "https://github.com/shamblonaut/clubhouse#readme",
+  "bugs": {
+    "url": "https://github.com/shamblonaut/clubhouse/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shamblonaut/clubhouse.git"
+  },
+  "license": "MIT",
+  "author": "Shaheem Niyaz <shaheembn@gmail.com> (https://shaheem.in)",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "start": "node --env-file-if-exists=.env app.js",
+    "dev": "nodemon --env-file-if-exists=.env app.js",
+    "migrate": "node --env-file-if-exists=.env db/migrate.js",
+    "seed": "node --env-file-if-exists=.env db/seed.js"
+  },
+  "dependencies": {
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.19.0",
+    "express-validator": "^7.3.2",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "pg": "^8.23.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
