@@ -71,4 +71,5 @@ h6 {
 /* Custom */
 body {
   font-family: "Inter", sans-serif;
+  min-height: 100svh;
 }

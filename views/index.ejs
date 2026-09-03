@@ -1,9 +1,15 @@
 <link rel="stylesheet" href="/css/views/index.css">
 
-<div class="logo">
-  <img src="/logo.svg" alt="ClubHouse logo" width="160" height="160">
-  <h1>ClubHouse</h1>
-</div>
+<%- include("partials/header.ejs", {
+showLogin: !locals.isAuthenticated,
+showLogout: locals.isAuthenticated
+}) %>
+
+<% if (locals.user) { %>
+<h1>Good Morning, <%= user.full_name %>!</h1>
+<% } else { %>
+<h1>Welcome to ClubHouse!</h1>
+<% } %>
 
 <%- contentFor("title") %>
 ClubHouse | Home

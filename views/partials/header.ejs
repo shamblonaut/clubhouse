@@ -1,0 +1,18 @@
+<header>
+  <div class="logo">
+    <img src="/logo.svg" alt="ClubHouse logo" width="160" height="160">
+    <p>ClubHouse</p>
+  </div>
+
+  <% if (locals.showLogin) { %>
+  <div class="login">
+    <a href="/login">Login</a>
+  </div>
+  <% } %>
+
+  <% if (locals.showLogout) { %>
+  <div class="logout">
+    <a href="/logout">Logout</a>
+  </div>
+  <% } %>
+</header>

@@ -1,0 +1,60 @@
+<link rel="stylesheet" href="/css/views/auth.css" />
+
+<%- include("partials/header.ejs") %>
+
+<main>
+  <form action="/signup" method="POST">
+    <img src="/logo.svg" alt="ClubHouse Logo">
+    <h1>Welcome to ClubHouse!</h1>
+
+    <% if (locals.errors && errors.length > 0) { %>
+    <ul class="errors">
+      <% errors.forEach((error) => { %>
+      <li><%= error %></li>
+      <% }); %>
+    </ul>
+    <% } %>
+
+    <div class="fields">
+      <div class="field">
+        <label for="full-name">Full Name</label>
+        <input type="text"
+               id="full-name"
+               name="fullName"
+               placeholder="John Doe"
+               autocomplete="name"
+               required />
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email"
+               id="email"
+               name="email"
+               placeholder="example@gmail.com"
+               required />
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password"
+               id="password"
+               name="password"
+               autocomplete="new-password"
+               required />
+      </div>
+      <div class="field">
+        <label for="confirm">Confirm Password</label>
+        <input type="password"
+               id="confirm"
+               name="confirmPassword"
+               autocomplte="off"
+               required />
+      </div>
+    </div>
+
+    <button type="submit">Sign Up</button>
+    <p>Already have an account? <a href="/login">Login</a></p>
+  </form>
+</main>
+
+<%- contentFor("title") %>
+Sign Up
