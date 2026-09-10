@@ -1,3 +1,5 @@
+import { body } from "express-validator";
+
 import pool from "../db/pool.js";
 
 export const showHome = async (req, res) => {
@@ -22,4 +24,22 @@ GROUP BY posts.id, users.id
       )
     ).rows,
   });
+};
+
+export const postRules = [
+  body("content").notEmpty().withMessage("Post must not be empty"),
+];
+
+export const createPost = async (req, res) => {
+  const { content } = req.validatedBody;
+  const authorId = req.user?.id;
+
+  if (!req.isAuthenticated() || !authorId) return res.sendStatus(401);
+
+  await pool.query("INSERT INTO posts (content, author_id) VALUES ($1, $2)", [
+    content,
+    authorId,
+  ]);
+
+  res.redirect("/");
 };

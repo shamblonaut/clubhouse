@@ -19,7 +19,7 @@ export async function userExistsByEmail(email) {
 export async function insertUser(fullName, email, avatarUrl, passwordHash) {
   const { rows } = await pool.query(
     `
-        INSERT INTO users (full_name, email, password_hash, avatar_url)
+        INSERT INTO users (full_name, email, avatar_url, password_hash)
         VALUES ($1, $2, $3)
         RETURNING id, full_name, email, avatar_url, created_at, updated_at
       `,

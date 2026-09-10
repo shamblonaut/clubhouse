@@ -15,7 +15,7 @@
         <img src="<%= user.avatar_url %>" alt="Avatar of <%= user.full_name %>">
         <p><%= user.full_name %></p>
       </div>
-      <form class="post-form">
+      <form action="/post" method="POST" class="post-form">
         <textarea id="post-content"
                   name="content"
                   placeholder="What's on your mind?"
