@@ -51,10 +51,10 @@ export const signupRules = [
 ];
 
 export const signupUser = async (req, res, next) => {
-  const { fullName, email, password } = req.validatedBody;
+  const { fullName, email, avatarUrl, password } = req.validatedBody;
   const passwordHash = await bcrypt.hash(password, 12);
 
-  const user = await insertUser(fullName, email, passwordHash);
+  const user = await insertUser(fullName, email, avatarUrl, passwordHash);
 
   req.login(user, (error) => {
     if (error) return next(error);

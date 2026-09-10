@@ -1,32 +1,57 @@
 <link rel="stylesheet" href="/css/views/home.css">
 
-<%- include("partials/header.ejs", {
-showLogin: !locals.isAuthenticated,
-showLogout: locals.isAuthenticated
-}) %>
+<%- include("partials/header.ejs", { navLink }) %>
 
-<ul>
-  <% posts.forEach((post) => { %>
-  <li class="post">
-    <div class="post-header">
-      <img src="<%= post.author_avatar_url %>"
-           alt="Avatar of <%= post.author_full_name %>">
-      <p><%= post.author_full_name %></p>
+<section>
+  <div class="hero">
+    <img src="/logo.svg" alt="ClubHouse Logo" class="logo">
+    <h1>Welcome to ClubHouse!</h1>
+    <p>Share your random thoughts with like-minded members</p>
+    <% if (!isAuthenticated) { %>
+    <a href="/signup">Join ClubHouse</a>
+    <% } else { %>
+    <div class="new-post">
+      <div class="post-header">
+        <img src="<%= user.avatar_url %>" alt="Avatar of <%= user.full_name %>">
+        <p><%= user.full_name %></p>
+      </div>
+      <form class="post-form">
+        <textarea id="post-content"
+                  name="content"
+                  placeholder="What's on your mind?"
+                  rows="1"
+                  required></textarea>
+        <button>Post</button>
+      </form>
     </div>
-    <p class="post-content"><%= post.content %></p>
-    <div class="post-interactions">
-      <button>
-        <div class="icon">👍</div>
-        <div class="unit"><%= post.likes %></div>
-      </button>
-      <button>
-        <div class="icon">👎</div>
-        <div class="unit"><%= post.dislikes %></div>
-      </button>
-    </div>
-  </li>
-  <% }); %>
-</ul>
+    <% } %>
+  </div>
+</section>
+
+<section>
+  <ul>
+    <% posts.forEach((post) => { %>
+    <li class="post">
+      <div class="post-header">
+        <img src="<%= post.author_avatar_url %>"
+             alt="Avatar of <%= post.author_full_name %>">
+        <p><%= post.author_full_name %></p>
+      </div>
+      <p class="post-content"><%= post.content %></p>
+      <div class="post-interactions">
+        <button>
+          <div class="icon">👍</div>
+          <div class="unit"><%= post.likes %></div>
+        </button>
+        <button>
+          <div class="icon">👎</div>
+          <div class="unit"><%= post.dislikes %></div>
+        </button>
+      </div>
+    </li>
+    <% }); %>
+  </ul>
+</section>
 
 <%- contentFor("title") %>
 ClubHouse | Home

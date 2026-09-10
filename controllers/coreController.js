@@ -2,6 +2,7 @@ import pool from "../db/pool.js";
 
 export const showHome = async (req, res) => {
   res.render("home", {
+    navLink: req.isAuthenticated() ? "/logout" : "/login",
     isAuthenticated: req.isAuthenticated(),
     user: req.user,
     posts: (
