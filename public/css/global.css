@@ -69,7 +69,15 @@ h6 {
 }
 
 /* Custom */
+:root {
+  --max-screen: 64rem;
+}
+
 body {
   font-family: "Inter", sans-serif;
   min-height: 100svh;
+}
+
+ul {
+  padding: 0;
 }

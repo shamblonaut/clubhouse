@@ -13,6 +13,7 @@ import {
   verify,
 } from "./middleware/authentication.js";
 import authRouter from "./routes/authRoutes.js";
+import coreRouter from "./routes/coreRoutes.js";
 
 const PORT = process.env.PORT || 3000;
 
@@ -49,13 +50,7 @@ passport.use(new LocalStrategy({ usernameField: "email" }, verify));
 passport.serializeUser(serializeUser);
 passport.deserializeUser(deserializeUser);
 
-app.get("/", (req, res) => {
-  res.render("index", {
-    isAuthenticated: req.isAuthenticated(),
-    user: req.user,
-  });
-});
-
+app.use("/", coreRouter);
 app.use("/", authRouter);
 
 app.use((error, req, res, next) => {

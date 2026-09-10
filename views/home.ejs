@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="/css/views/home.css">
+
+<%- include("partials/header.ejs", {
+showLogin: !locals.isAuthenticated,
+showLogout: locals.isAuthenticated
+}) %>
+
+<ul>
+  <% posts.forEach((post) => { %>
+  <li class="post">
+    <div class="post-header">
+      <img src="<%= post.author_avatar_url %>"
+           alt="Avatar of <%= post.author_full_name %>">
+      <p><%= post.author_full_name %></p>
+    </div>
+    <p class="post-content"><%= post.content %></p>
+    <div class="post-interactions">
+      <button>
+        <div class="icon">👍</div>
+        <div class="unit"><%= post.likes %></div>
+      </button>
+      <button>
+        <div class="icon">👎</div>
+        <div class="unit"><%= post.dislikes %></div>
+      </button>
+    </div>
+  </li>
+  <% }); %>
+</ul>
+
+<%- contentFor("title") %>
+ClubHouse | Home
