@@ -7,6 +7,12 @@ header {
   margin: 0 auto;
   color: #800080;
 
+  & > div {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
   a:has(.logo) {
     text-decoration: none;
     color: inherit;
@@ -22,6 +28,17 @@ header {
     img {
       width: 3rem;
       height: auto;
+    }
+  }
+
+  .member-status {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button {
+      background: none;
+      border: none;
     }
   }
 

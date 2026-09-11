@@ -1,6 +1,11 @@
 <link rel="stylesheet" href="/css/views/home.css">
 
-<%- include("partials/header.ejs", { navLink }) %>
+<%- include("partials/header.ejs", {
+navLink: isAuthenticated ? "/logout" : "/login",
+showMemberStatus: true,
+isAuthenticated,
+isMember,
+}) %>
 
 <section>
   <div class="hero">
@@ -32,11 +37,19 @@
   <ul>
     <% posts.forEach((post) => { %>
     <li class="post">
+      <% if (isMember) { %>
       <div class="post-header">
         <img src="<%= post.author_avatar_url %>"
              alt="Avatar of <%= post.author_full_name %>">
         <p><%= post.author_full_name %></p>
       </div>
+      <% } else { %>
+      <div class="post-header">
+        <img src="https://cdn-icons-png.flaticon.com/512/17561/17561717.png"
+             alt="Post author avatar">
+        <p>Anonymous</p>
+      </div>
+      <% } %>
       <p class="post-content"><%= post.content %></p>
       <div class="post-interactions">
         <button>
@@ -52,6 +65,8 @@
     <% }); %>
   </ul>
 </section>
+
+<script src="/js/member.js"></script>
 
 <%- contentFor("title") %>
 ClubHouse | Home

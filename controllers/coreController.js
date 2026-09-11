@@ -4,9 +4,9 @@ import pool from "../db/pool.js";
 
 export const showHome = async (req, res) => {
   res.render("home", {
-    navLink: req.isAuthenticated() ? "/logout" : "/login",
-    isAuthenticated: req.isAuthenticated(),
     user: req.user,
+    isAuthenticated: req.isAuthenticated(),
+    isMember: req.user?.is_member,
     posts: (
       await pool.query(
         `
@@ -42,4 +42,27 @@ export const createPost = async (req, res) => {
   ]);
 
   res.redirect("/");
+};
+
+export const inductionRules = [
+  body("memberPassword")
+    .notEmpty()
+    .withMessage("Member password must not be empty"),
+];
+
+export const inductMember = async (req, res) => {
+  const { memberPassword } = req.validatedBody;
+  const user = req.user;
+
+  if (!req.isAuthenticated() || !user) {
+    return res.status(401).json({ errors: ["No logged in user present"] });
+  } else if (memberPassword !== process.env.MEMBER_PASSWORD) {
+    return res.status(401).json({ errors: ["Incorrect member password"] });
+  }
+
+  await pool.query("UPDATE users SET is_member = TRUE WHERE id = $1", [
+    user.id,
+  ]);
+
+  res.status(200).json({ success: true });
 };
