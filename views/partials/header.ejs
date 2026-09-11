@@ -48,7 +48,7 @@
     <% } %>
 
     <% if (locals.navLink) { %>
-    <a href="<%= navLink %>"><%= navLink.substring(1).replace(/^./, (c) => c.toUpperCase()) %></a>
+    <a href="<%= navLink.href %>"><%= navLink.content %></a>
     <% } %>
   </div>
 </header>

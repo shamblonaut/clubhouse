@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="/css/views/home.css">
 
 <%- include("partials/header.ejs", {
-navLink: isAuthenticated ? "/logout" : "/login",
+navLink: isAuthenticated ? { href: "/logout", content: "Logout"} : { href: "/login", content: "Login" },
 showMemberStatus: true,
 isAuthenticated,
 isMember,

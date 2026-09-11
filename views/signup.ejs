@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/css/views/auth.css" />
 
-<%- include("partials/header.ejs", { navLink: "/home" }) %>
+<%- include("partials/header.ejs", { navLink: { href: "/", content: "Home" } }) %>
 
 <main>
   <form action="/signup" method="POST">
