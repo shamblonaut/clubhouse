@@ -40,6 +40,7 @@ export async function selectPostsWithAuthors() {
 SELECT
   posts.id AS id,
   posts.content AS content,
+  posts.created_at AS created_at,
   users.id AS author_id,
   users.full_name AS author_full_name,
   users.avatar_url AS author_avatar_url

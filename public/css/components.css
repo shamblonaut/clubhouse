@@ -101,15 +101,21 @@ header {
   align-items: center;
   gap: 0.75rem;
 
-  img {
+  .post-author-avatar {
     height: 36px;
     width: 36px;
     border-radius: 50%;
   }
 
-  p {
+  .post-author {
     text-align: start;
     font-size: 1.5rem;
     font-weight: 700;
+  }
+
+  .post-date {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #4c4c4c;
   }
 }

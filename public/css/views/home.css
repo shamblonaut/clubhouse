@@ -60,7 +60,7 @@ ul {
   border-radius: 8px;
   width: 100%;
 
-  .post-header img {
+  .post-header .post-author-avatar {
     width: 48px;
     height: 48px;
   }
