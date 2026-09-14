@@ -37,7 +37,7 @@ isMember,
   <ul>
     <% posts.forEach((post) => { %>
     <li class="post">
-      <% if (isMember) { %>
+      <% if (isMember || post.author_id === user?.id) { %>
       <div class="post-header">
         <img src="<%= post.author_avatar_url %>"
              alt="Avatar of <%= post.author_full_name %>">
