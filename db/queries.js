@@ -2,7 +2,19 @@ import pool from "./pool.js";
 
 export async function selectUserById(id) {
   const { rows } = await pool.query(
-    "SELECT id, full_name, email, avatar_url, is_member, created_at, updated_at FROM users WHERE id = $1",
+    `
+SELECT
+  id,
+  full_name,
+  email,
+  avatar_url,
+  is_member,
+  is_admin,
+  created_at,
+  updated_at
+FROM users
+WHERE id = $1
+      `,
     [id],
   );
   return rows[0];
@@ -52,6 +64,10 @@ ORDER BY posts.created_at DESC
   );
 
   return rows;
+}
+
+export async function deletePostRow(postId) {
+  await pool.query("DELETE FROM posts WHERE id = $1", [postId]);
 }
 
 export async function selectReactionsForPosts(userId = null) {

@@ -118,4 +118,24 @@ header {
     font-weight: 500;
     color: #4c4c4c;
   }
+
+  .delete-post {
+    margin-left: auto;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem;
+
+    svg {
+      color: #ff4040;
+    }
+
+    &:hover {
+      background-color: #ff4040;
+
+      svg {
+        color: #ffffff;
+      }
+    }
+  }
 }

@@ -30,7 +30,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(import.meta.dirname, "public")));
 
-const requiredEnvVariables = ["SESSION_SECRET", "MEMBER_PASSWORD"];
+const requiredEnvVariables = [
+  "SESSION_SECRET",
+  "MEMBER_PASSWORD",
+  "ADMIN_PASSWORD",
+];
 const missingEnvVariables = requiredEnvVariables.filter(
   (variable) => process.env[variable] === undefined,
 );
