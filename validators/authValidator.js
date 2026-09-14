@@ -15,6 +15,10 @@ export const signupRules = [
       }
     })
     .bail({ level: "request" }),
+  body("avatarUrl")
+    .trim()
+    .isURL()
+    .withMessage("Avatar URL must be a valid URL"),
   body("password")
     .isStrongPassword()
     .withMessage(

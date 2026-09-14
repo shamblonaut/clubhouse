@@ -25,9 +25,9 @@ export async function insertUser(
 ) {
   const { rows } = await pool.query(
     `
-        INSERT INTO users (full_name, email, avatar_url, password_hash, is_member)
-        VALUES ($1, $2, $3)
-        RETURNING id, full_name, email, avatar_url, is_member, created_at, updated_at
+INSERT INTO users (full_name, email, avatar_url, password_hash, is_member)
+VALUES ($1, $2, $3, $4, $5)
+RETURNING id, full_name, email, avatar_url, is_member, created_at, updated_at
       `,
     [fullName, email, avatarUrl, passwordHash, isMember],
   );
