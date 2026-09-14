@@ -30,15 +30,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(import.meta.dirname, "public")));
 
-// TODO: Add check for MEMBER_PASSWORD
-const sessionSecret = process.env.SESSION_SECRET;
-if (!sessionSecret) {
-  throw new Error("Missing required environment variable: SESSION_SECRET");
+const requiredEnvVariables = ["SESSION_SECRET", "MEMBER_PASSWORD"];
+const missingEnvVariables = requiredEnvVariables.filter(
+  (variable) => process.env[variable] === undefined,
+);
+if (missingEnvVariables.length > 0) {
+  throw new Error(
+    "Missing required environment variable(s): " +
+      missingEnvVariables.join(", "),
+  );
 }
 
 app.use(
   session({
-    secret: sessionSecret,
+    secret: process.env.SESSION_SECRET,
     store: new (pgStore(session))({
       pool,
       tableName: "sessions",
