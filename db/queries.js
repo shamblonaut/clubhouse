@@ -55,12 +55,13 @@ export async function selectReactionsForPosts(userId = null) {
   const { rows } = await pool.query(
     `
 SELECT
-  post_id,
+  posts.id AS post_id,
   COUNT(*) FILTER (WHERE vote = 1) AS likes,
   COUNT(*) FILTER (WHERE vote = -1) AS dislikes,
   COALESCE(MAX(vote) FILTER (WHERE user_id = $1), 0) AS user_reaction
-FROM reactions
-GROUP BY post_id
+FROM posts
+LEFT JOIN reactions ON reactions.post_id = posts.id
+GROUP BY posts.id
     `,
     [userId],
   );
