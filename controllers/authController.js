@@ -1,7 +1,6 @@
-import { body } from "express-validator";
 import bcrypt from "bcrypt";
 
-import { insertUser, userExistsByEmail } from "../db/queries.js";
+import { insertUser } from "../db/queries.js";
 
 export const showSignup = (req, res) => {
   res.render("signup", { errors: req.session?.messages });
@@ -27,29 +26,6 @@ export const logoutUser = (req, res, next) => {
   res.redirect("/");
 };
 
-export const signupRules = [
-  body("fullName").trim().notEmpty().withMessage("Full name must not be empty"),
-  body("email")
-    .trim()
-    .isEmail()
-    .withMessage("Invalid email address")
-    .normalizeEmail()
-    .custom(async (email) => {
-      if (await userExistsByEmail(email)) {
-        throw new Error(`A user already exists with the email (${email})`);
-      }
-    })
-    .bail({ level: "request" }),
-  body("password")
-    .isStrongPassword()
-    .withMessage(
-      "Password must be atleast 8 characters long, and contain at least one uppercase letter, lowercase letter, number and special character",
-    ),
-  body("confirmPassword")
-    .custom((value, { req }) => value === req.body.password)
-    .withMessage("Both password and confirm password should be equal"),
-];
-
 export const signupUser = async (req, res, next) => {
   const { fullName, email, avatarUrl, password } = req.validatedData;
   const passwordHash = await bcrypt.hash(password, 12);
@@ -61,12 +37,3 @@ export const signupUser = async (req, res, next) => {
     res.redirect("/");
   });
 };
-
-export const loginRules = [
-  body("email")
-    .trim()
-    .isEmail()
-    .withMessage("Invalid email address")
-    .normalizeEmail(),
-  body("password").notEmpty().withMessage("Password should not be empty"),
-];

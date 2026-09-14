@@ -3,10 +3,12 @@ import { Router } from "express";
 import {
   createReaction,
   deleteReaction,
-  reactionDeletionRules,
-  reactionRules,
   updateReaction,
 } from "../controllers/reactionController.js";
+import {
+  reactionRules,
+  reactionDeletionRules,
+} from "../validators/reactionValidator.js";
 import { validateRequest } from "../middleware/validation.js";
 
 const reactionRouter = new Router({ mergeParams: true });

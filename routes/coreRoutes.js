@@ -3,10 +3,9 @@ import { Router } from "express";
 import {
   showHome,
   createPost,
-  postRules,
   inductMember,
-  inductionRules,
 } from "../controllers/coreController.js";
+import { postRules, inductionRules } from "../validators/coreValidator.js";
 import { validateRequest } from "../middleware/validation.js";
 
 const coreRouter = new Router();

@@ -2,13 +2,12 @@ import { Router } from "express";
 import passport from "passport";
 
 import {
-  loginRules,
   logoutUser,
   showLogin,
   showSignup,
-  signupRules,
   signupUser,
 } from "../controllers/authController.js";
+import { signupRules, loginRules } from "../validators/authValidator.js";
 import { validateRequest } from "../middleware/validation.js";
 
 const authRouter = new Router();

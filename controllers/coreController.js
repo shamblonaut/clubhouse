@@ -1,5 +1,3 @@
-import { body, param } from "express-validator";
-
 import pool from "../db/pool.js";
 import {
   selectPostsWithAuthors,
@@ -23,10 +21,6 @@ export const showHome = async (req, res) => {
   });
 };
 
-export const postRules = [
-  body("content").notEmpty().withMessage("Post must not be empty"),
-];
-
 export const createPost = async (req, res) => {
   const { content } = req.validatedData;
   const authorId = req.user?.id;
@@ -40,12 +34,6 @@ export const createPost = async (req, res) => {
 
   res.redirect("/");
 };
-
-export const inductionRules = [
-  body("memberPassword")
-    .notEmpty()
-    .withMessage("Member password must not be empty"),
-];
 
 export const inductMember = async (req, res) => {
   const { memberPassword } = req.validatedData;
