@@ -45,6 +45,7 @@ SELECT
 FROM posts
 JOIN users ON users.id = posts.author_id
 GROUP BY posts.id, users.id
+ORDER BY posts.created_at DESC
         `,
   );
 
