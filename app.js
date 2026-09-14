@@ -14,6 +14,7 @@ import {
 } from "./middleware/authentication.js";
 import authRouter from "./routes/authRoutes.js";
 import coreRouter from "./routes/coreRoutes.js";
+import reactionRouter from "./routes/reactionRoutes.js";
 
 const PORT = process.env.PORT || 3000;
 
@@ -29,6 +30,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(import.meta.dirname, "public")));
 
+// TODO: Add check for MEMBER_PASSWORD
 const sessionSecret = process.env.SESSION_SECRET;
 if (!sessionSecret) {
   throw new Error("Missing required environment variable: SESSION_SECRET");
@@ -50,8 +52,9 @@ passport.use(new LocalStrategy({ usernameField: "email" }, verify));
 passport.serializeUser(serializeUser);
 passport.deserializeUser(deserializeUser);
 
-app.use("/", coreRouter);
 app.use("/", authRouter);
+app.use("/", coreRouter);
+app.use("/posts/:postId/react", reactionRouter);
 
 app.use((error, req, res, next) => {
   console.error(error);

@@ -16,7 +16,7 @@ export function validateRequest(requestView) {
       }
     }
 
-    req.validatedBody = matchedData(req);
+    req.validatedData = matchedData(req);
     next();
   };
 }

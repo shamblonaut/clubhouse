@@ -51,14 +51,15 @@ isMember,
       </div>
       <% } %>
       <p class="post-content"><%= post.content %></p>
-      <div class="post-interactions">
-        <button>
+      <div class="post-interactions"
+           data-vote="<%= reactions[post.id].user_reaction %>">
+        <button class="like" data-post_id="<%= post.id %>">
           <div class="icon">👍</div>
-          <div class="unit"><%= post.likes %></div>
+          <div class="count"><%= reactions[post.id].likes %></div>
         </button>
-        <button>
+        <button class="dislike" data-post_id="<%= post.id %>">
           <div class="icon">👎</div>
-          <div class="unit"><%= post.dislikes %></div>
+          <div class="count"><%= reactions[post.id].dislikes %></div>
         </button>
       </div>
     </li>
@@ -67,6 +68,7 @@ isMember,
 </section>
 
 <script src="/js/member.js"></script>
+<script src="/js/reactions.js"></script>
 
 <%- contentFor("title") %>
 ClubHouse | Home

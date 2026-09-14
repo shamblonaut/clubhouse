@@ -1,28 +1,25 @@
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 
 import pool from "../db/pool.js";
+import {
+  selectPostsWithAuthors,
+  selectReactionsForPosts,
+} from "../db/queries.js";
+import objectArrayToObject from "../utils/objectify.js";
 
 export const showHome = async (req, res) => {
+  const posts = await selectPostsWithAuthors();
+  const reactions = objectArrayToObject(
+    await selectReactionsForPosts(req.user?.id),
+    "post_id",
+    "vote",
+  );
   res.render("home", {
     user: req.user,
     isAuthenticated: req.isAuthenticated(),
     isMember: req.user?.is_member,
-    posts: (
-      await pool.query(
-        `
-SELECT
-  posts.content AS content,
-  users.full_name AS author_full_name,
-  users.avatar_url AS author_avatar_url,
-  COUNT(*) FILTER (WHERE reactions.vote = 1) AS likes,
-  COUNT(*) FILTER (WHERE reactions.vote = -1) AS dislikes
-FROM posts
-JOIN users ON users.id = posts.author_id
-LEFT JOIN reactions ON reactions.post_id = posts.id
-GROUP BY posts.id, users.id
-        `,
-      )
-    ).rows,
+    posts,
+    reactions,
   });
 };
 
@@ -31,7 +28,7 @@ export const postRules = [
 ];
 
 export const createPost = async (req, res) => {
-  const { content } = req.validatedBody;
+  const { content } = req.validatedData;
   const authorId = req.user?.id;
 
   if (!req.isAuthenticated() || !authorId) return res.sendStatus(401);
@@ -51,7 +48,7 @@ export const inductionRules = [
 ];
 
 export const inductMember = async (req, res) => {
-  const { memberPassword } = req.validatedBody;
+  const { memberPassword } = req.validatedData;
   const user = req.user;
 
   if (!req.isAuthenticated() || !user) {

@@ -65,6 +65,14 @@ header {
     gap: 0.5rem;
     align-items: center;
 
+    &[data-vote="1"] .like,
+    &[data-vote="-1"] .dislike {
+      border-color: #800080;
+      border-width: 2px;
+      color: #800080;
+      font-weight: 700;
+    }
+
     button {
       flex: 1;
       display: flex;
@@ -80,9 +88,8 @@ header {
         font-size: 1.5rem;
       }
 
-      .unit {
+      .count {
         font-size: 1rem;
-        font-weight: 500;
       }
     }
   }
