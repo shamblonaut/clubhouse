@@ -10,13 +10,27 @@ import {
   reactionDeletionRules,
 } from "../validators/reactionValidator.js";
 import { validateRequest } from "../middleware/validation.js";
+import { requireAuthentication } from "../middleware/authentication.js";
 
 const reactionRouter = new Router({ mergeParams: true });
 
-reactionRouter.post("/", reactionRules, validateRequest(), createReaction);
-reactionRouter.patch("/", reactionRules, validateRequest(), updateReaction);
+reactionRouter.post(
+  "/",
+  requireAuthentication,
+  reactionRules,
+  validateRequest(),
+  createReaction,
+);
+reactionRouter.patch(
+  "/",
+  requireAuthentication,
+  reactionRules,
+  validateRequest(),
+  updateReaction,
+);
 reactionRouter.delete(
   "/",
+  requireAuthentication,
   reactionDeletionRules,
   validateRequest(),
   deleteReaction,

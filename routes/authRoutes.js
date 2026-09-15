@@ -17,6 +17,7 @@ import {
   adminRules,
 } from "../validators/authValidator.js";
 import { validateRequest } from "../middleware/validation.js";
+import { requireAuthentication } from "../middleware/authentication.js";
 
 const authRouter = new Router();
 
@@ -39,7 +40,19 @@ authRouter.post("/signup", [
   validateRequest("signup"),
   signupUser,
 ]);
-authRouter.post("/join", inductionRules, validateRequest(), inductMember);
-authRouter.post("/admin", adminRules, validateRequest(), appointAdmin);
+authRouter.post(
+  "/join",
+  requireAuthentication,
+  inductionRules,
+  validateRequest(),
+  inductMember,
+);
+authRouter.post(
+  "/admin",
+  requireAuthentication,
+  adminRules,
+  validateRequest(),
+  appointAdmin,
+);
 
 export default authRouter;

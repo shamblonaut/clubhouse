@@ -10,10 +10,6 @@ import objectArrayToObject from "../utils/objectify.js";
 export const createReaction = async (req, res) => {
   const { postId, vote } = req.validatedData;
 
-  if (!req.isAuthenticated() || !req.user) {
-    return res.status(401).json({ errors: ["No logged in user present"] });
-  }
-
   const userId = req.user.id;
   const existingReaction = await selectReactionForPostByUser(postId, userId);
   if (existingReaction) {
@@ -35,10 +31,6 @@ export const createReaction = async (req, res) => {
 export const updateReaction = async (req, res) => {
   const { postId, vote } = req.validatedData;
 
-  if (!req.isAuthenticated() || !req.user) {
-    return res.status(401).json({ errors: ["No logged in user present"] });
-  }
-
   const userId = req.user.id;
   const existingReaction = await selectReactionForPostByUser(postId, userId);
   if (!existingReaction) {
@@ -58,10 +50,6 @@ export const updateReaction = async (req, res) => {
 };
 
 export const deleteReaction = async (req, res) => {
-  if (!req.isAuthenticated() || !req.user) {
-    return res.status(401).json({ errors: ["No logged in user present"] });
-  }
-
   const { postId } = req.validatedData;
 
   const userId = req.user.id;

@@ -36,3 +36,11 @@ export async function deserializeUser(id, done) {
     done(error);
   }
 }
+
+export async function requireAuthentication(req, res, next) {
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({ errors: ["No logged in user present"] });
+  }
+
+  next();
+}

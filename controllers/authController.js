@@ -46,9 +46,7 @@ export const inductMember = async (req, res) => {
   const { memberPassword } = req.validatedData;
   const user = req.user;
 
-  if (!req.isAuthenticated() || !user) {
-    return res.status(401).json({ errors: ["No logged in user present"] });
-  } else if (memberPassword !== process.env.MEMBER_PASSWORD) {
+  if (memberPassword !== process.env.MEMBER_PASSWORD) {
     return res.status(401).json({ errors: ["Incorrect member password"] });
   }
 
@@ -65,9 +63,7 @@ export const appointAdmin = async (req, res) => {
   const { adminPassword } = req.validatedData;
   const user = req.user;
 
-  if (!req.isAuthenticated() || !user) {
-    return res.status(401).json({ errors: ["No logged in user present"] });
-  } else if (adminPassword !== process.env.ADMIN_PASSWORD) {
+  if (adminPassword !== process.env.ADMIN_PASSWORD) {
     return res.status(401).json({ errors: ["Incorrect admin password"] });
   }
 
