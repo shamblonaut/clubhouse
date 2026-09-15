@@ -9,7 +9,7 @@ memberStatusForm?.addEventListener("submit", async (event) => {
   const memberPassword = prompt("Please enter member password:");
   if (!memberPassword) return;
 
-  fetch("/join", {
+  fetchWithLoader("/join", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ memberPassword }),

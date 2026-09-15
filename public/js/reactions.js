@@ -30,7 +30,7 @@ function createReactionHandler(vote) {
           : { method: "POST", body: JSON.stringify({ vote }) }),
     };
 
-    fetch(`/posts/${postId}/react`, fetchOptions)
+    fetchWithLoader(`/posts/${postId}/react`, fetchOptions)
       .then((response) => {
         if (!response.ok) {
           throw new Error(

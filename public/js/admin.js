@@ -7,7 +7,7 @@ postDeleteButtons?.forEach((postDeleteButton) => {
     const confirmation = confirm("Are you sure you want to delete that post?");
     if (!confirmation) return;
 
-    fetch(`/posts/${postId}`, { method: "DELETE" })
+    fetchWithLoader(`/posts/${postId}`, { method: "DELETE" })
       .then((response) => {
         if (response.ok) {
           alert("Post deleted successfully!");
