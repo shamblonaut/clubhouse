@@ -1,16 +1,13 @@
 import bcrypt from "bcrypt";
 
-import pool from "../db/pool.js";
-import { selectUserById } from "../db/queries.js";
+import {
+  selectUserByEmailWithPasswordHash,
+  selectUserById,
+} from "../db/queries.js";
 
 export async function verify(email, password, done) {
   try {
-    const user = (
-      await pool.query(
-        "SELECT id, full_name, email, password_hash, created_at, updated_at FROM users WHERE email = $1",
-        [email],
-      )
-    ).rows[0];
+    const user = await selectUserByEmailWithPasswordHash(email);
     if (!user) {
       return done(null, false, { message: `User does not exist (${email})` });
     }

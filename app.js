@@ -14,9 +14,22 @@ import {
 } from "./middleware/authentication.js";
 import authRouter from "./routes/authRoutes.js";
 import coreRouter from "./routes/coreRoutes.js";
+import postRouter from "./routes/postRoutes.js";
 import reactionRouter from "./routes/reactionRoutes.js";
 
 const PORT = process.env.PORT || 3000;
+
+const missingEnvVariables = [
+  "SESSION_SECRET",
+  "MEMBER_PASSWORD",
+  "ADMIN_PASSWORD",
+].filter((variable) => process.env[variable] === undefined);
+if (missingEnvVariables.length > 0) {
+  throw new Error(
+    "Missing required environment variable(s): " +
+      missingEnvVariables.join(", "),
+  );
+}
 
 const app = express();
 
@@ -29,21 +42,6 @@ app.set("layout extractStyles", true);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(import.meta.dirname, "public")));
-
-const requiredEnvVariables = [
-  "SESSION_SECRET",
-  "MEMBER_PASSWORD",
-  "ADMIN_PASSWORD",
-];
-const missingEnvVariables = requiredEnvVariables.filter(
-  (variable) => process.env[variable] === undefined,
-);
-if (missingEnvVariables.length > 0) {
-  throw new Error(
-    "Missing required environment variable(s): " +
-      missingEnvVariables.join(", "),
-  );
-}
 
 app.use(
   session({
@@ -63,6 +61,7 @@ passport.deserializeUser(deserializeUser);
 
 app.use("/", authRouter);
 app.use("/", coreRouter);
+app.use("/posts", postRouter);
 app.use("/posts/:postId/react", reactionRouter);
 
 app.use((error, req, res, next) => {

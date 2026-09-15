@@ -73,5 +73,5 @@ export const deleteReaction = async (req, res) => {
   }
 
   await deleteReactionRow(postId, userId);
-  res.status(200).json({ success: true });
+  res.sendStatus(204);
 };

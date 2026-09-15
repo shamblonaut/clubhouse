@@ -37,3 +37,15 @@ export const loginRules = [
     .normalizeEmail(),
   body("password").notEmpty().withMessage("Password should not be empty"),
 ];
+
+export const inductionRules = [
+  body("memberPassword")
+    .notEmpty()
+    .withMessage("Member password must not be empty"),
+];
+
+export const adminRules = [
+  body("adminPassword")
+    .notEmpty()
+    .withMessage("Admin password must not be empty"),
+];

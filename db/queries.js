@@ -1,22 +1,16 @@
 import pool from "./pool.js";
 
 export async function selectUserById(id) {
-  const { rows } = await pool.query(
-    `
-SELECT
-  id,
-  full_name,
-  email,
-  avatar_url,
-  is_member,
-  is_admin,
-  created_at,
-  updated_at
-FROM users
-WHERE id = $1
-      `,
-    [id],
-  );
+  const { rows } = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
+  const row = rows[0];
+  delete row.password_hash;
+  return row;
+}
+
+export async function selectUserByEmailWithPasswordHash(email) {
+  const { rows } = await pool.query("SELECT * FROM users WHERE email = $1", [
+    email,
+  ]);
   return rows[0];
 }
 
@@ -46,6 +40,14 @@ RETURNING id, full_name, email, avatar_url, is_member, created_at, updated_at
   return rows[0];
 }
 
+export async function updateUserAsMember(userId) {
+  await pool.query("UPDATE users SET is_member = TRUE WHERE id = $1", [userId]);
+}
+
+export async function updateUserAsAdmin(userId) {
+  await pool.query("UPDATE users SET is_admin = TRUE WHERE id = $1", [userId]);
+}
+
 export async function selectPostsWithAuthors() {
   const { rows } = await pool.query(
     `
@@ -64,6 +66,19 @@ ORDER BY posts.created_at DESC
   );
 
   return rows;
+}
+
+export async function insertPost(content, authorId) {
+  const { rows } = await pool.query(
+    `
+INSERT INTO posts (content, author_id)
+VALUES ($1, $2)
+RETURNING *
+    `,
+    [content, authorId],
+  );
+
+  return rows[0];
 }
 
 export async function deletePostRow(postId) {

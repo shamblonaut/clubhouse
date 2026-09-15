@@ -10,15 +10,3 @@ export const postDeletionRules = [
     .withMessage("Value of post id must be a number")
     .toInt(),
 ];
-
-export const inductionRules = [
-  body("memberPassword")
-    .notEmpty()
-    .withMessage("Member password must not be empty"),
-];
-
-export const adminRules = [
-  body("adminPassword")
-    .notEmpty()
-    .withMessage("Admin password must not be empty"),
-];

@@ -17,8 +17,9 @@ function updateReactions(updatedData) {
 
 function createReactionHandler(vote) {
   return (event) => {
-    const postVote = Number(event.target.parentNode.dataset["vote"]);
-    const postId = event.target.dataset["post_id"];
+    const reactionButton = event.currentTarget;
+    const postVote = Number(reactionButton.parentNode.dataset["vote"]);
+    const postId = reactionButton.dataset["post_id"];
 
     const fetchOptions = {
       headers: { "Content-Type": "application/json" },
@@ -30,18 +31,30 @@ function createReactionHandler(vote) {
     };
 
     fetch(`/posts/${postId}/react`, fetchOptions)
-      .then((response) => response.json())
-      .then(({ success, data }) => {
-        if (data) {
-          updateReactions(data);
-        } else if (success) {
-          const voteCountDisplay = event.target.querySelector(".count");
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(
+            `HTTP Error ${response.status}: ${response.statusText}`,
+          );
+        }
+
+        if (response.status === 204) {
+          return null;
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        if (data !== null) {
+          updateReactions(data.data);
+        } else {
+          const voteCountDisplay = reactionButton.querySelector(".count");
           voteCountDisplay.textContent =
             Number(voteCountDisplay.textContent) - 1;
         }
 
-        event.target.parentNode.dataset["vote"] =
-          data?.[postId]?.user_reaction || 0;
+        reactionButton.parentNode.dataset["vote"] =
+          data?.data?.[postId]?.user_reaction || 0;
       });
   };
 }

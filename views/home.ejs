@@ -22,7 +22,7 @@ isMember,
              class="post-author-avatar">
         <p class="post-author"><%= user.full_name %></p>
       </div>
-      <form action="/post" method="POST" class="post-form">
+      <form action="/posts" method="POST" class="post-form">
         <textarea id="post-content"
                   name="content"
                   placeholder="What's on your mind?"
@@ -101,8 +101,10 @@ isMember,
   </ul>
 </section>
 
+<% if (isAuthenticated) { %>
 <script src="/js/member.js"></script>
 <script src="/js/reactions.js"></script>
+<% } %>
 <% if (isAdmin) { %>
 <script src="/js/admin.js"></script>
 <% } %>
